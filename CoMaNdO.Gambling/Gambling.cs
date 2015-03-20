@@ -490,8 +490,8 @@ namespace CoMaNdO.Gambling
                                 
                                 for (int i = 0; i < wins.Count; i++)
                                 {
-                                    Currency.Add(wins.ElementAt(i).Key, wins.ElementAt(i).Value + (bets[wins.ElementAt(i).Key].Value * wins.ElementAt(i).parentheticalMultiplier));
-                                    string msg = " " + wins.ElementAt(i).Key + " - " + (wins.ElementAt(i).Value + (bets[wins.ElementAt(i).Key].Value * wins.ElementAt(i).parentheticalMultiplier)) + " (Bet " + bets[wins.ElementAt(i).Key].Value + ")";
+                                    Currency.Add(wins.ElementAt(i).Key, wins.ElementAt(i).Value + (bets[wins.ElementAt(i).Key].Value * parentheticalMultiplier));
+                                    string msg = " " + wins.ElementAt(i).Key + " - " + (wins.ElementAt(i).Value + (bets[wins.ElementAt(i).Key].Value * parentheticalMultiplier)) + " (Bet " + bets[wins.ElementAt(i).Key].Value + ")";
                                     if (output.Length + msg.Length > 996)
                                     {
                                         Chat.SendMessage(output);
