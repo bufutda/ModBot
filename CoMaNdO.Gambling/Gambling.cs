@@ -478,6 +478,7 @@ namespace CoMaNdO.Gambling
                                 if ((leftParenthesis < rightParenthesis) && (leftParenthesis * rightParenthesis) !== 1)
                                 {
                                     rightParenthesis -= 1;
+                                    leftParenthesis += 4;
                                     try
                                     {
                                         parentheticalMultiplier = (int)option.Substring(leftParenthesis, rightParenthesis - leftParenthesis);
