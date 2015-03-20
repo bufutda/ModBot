@@ -472,10 +472,26 @@ namespace CoMaNdO.Gambling
                                 output = "Winners:";
                                 if (wins.Count == 0) output += " No One!";
 
+                                parentheticalMultiplier = 1;
+                                int leftParenthesis = option.IndexOf("(");
+                                int rightParenthesis = option.IndexOf(")");
+                                if ((leftParenthesis < rightParenthesis) && (leftParenthesis * rightParenthesis) !== 1)
+                                {
+                                    rightParenthesis -= 1;
+                                    try
+                                    {
+                                        parentheticalMultiplier = (int)option.Substring(leftParenthesis, rightParenthesis - leftParenthesis);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine("Error in parentheticalMultiplier parse: " + e);
+                                    }
+                                }
+                                
                                 for (int i = 0; i < wins.Count; i++)
                                 {
-                                    Currency.Add(wins.ElementAt(i).Key, wins.ElementAt(i).Value);
-                                    string msg = " " + wins.ElementAt(i).Key + " - " + wins.ElementAt(i).Value + " (Bet " + bets[wins.ElementAt(i).Key].Value + ")";
+                                    Currency.Add(wins.ElementAt(i).Key, wins.ElementAt(i).Value + (bets[wins.ElementAt(i).Key].Value * wins.ElementAt(i).parentheticalMultiplier));
+                                    string msg = " " + wins.ElementAt(i).Key + " - " + (wins.ElementAt(i).Value + (bets[wins.ElementAt(i).Key].Value * wins.ElementAt(i).parentheticalMultiplier)) + " (Bet " + bets[wins.ElementAt(i).Key].Value + ")";
                                     if (output.Length + msg.Length > 996)
                                     {
                                         Chat.SendMessage(output);
