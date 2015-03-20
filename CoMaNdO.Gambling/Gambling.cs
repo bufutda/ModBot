@@ -5,6 +5,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Int32;
 
 namespace CoMaNdO.Gambling
 {
@@ -477,15 +478,22 @@ namespace CoMaNdO.Gambling
                                 int rightParenthesis = option.IndexOf(")");
                                 if ((leftParenthesis < rightParenthesis) && (leftParenthesis * rightParenthesis) !== 1)
                                 {
+                                    int tryMultiplier = 0;
                                     rightParenthesis -= 1;
-                                    leftParenthesis += 4;
-                                    try
+                                    bool parsed = Int32.TryParse(option.Substring(leftParenthesis, rightParenthesis - leftParenthesis), out tryMultiplier);
+                                    if (!parsed)
                                     {
-                                        parentheticalMultiplier = (int)option.Substring(leftParenthesis, rightParenthesis - leftParenthesis);
+                                        leftParenthesis += 3;
+                                        parsed = Int32.TryParse(option.Substring(leftParenthesis, rightParenthesis - leftParenthesis), out tryMultiplier);
+                                        if (!parsed)
+                                        {
+                                            leftParenthesis += 1;
+                                            parsed = Int32.TryParse(option.Substring(leftParenthesis, rightParenthesis - leftParenthesis), out tryMultiplier);
+                                        }
                                     }
-                                    catch (Exception e)
+                                    if (tryMultiplier !== 0)
                                     {
-                                        Console.WriteLine("Error in parentheticalMultiplier parse: " + e);
+                                        parentheticalMultiplier = tryMultiplier;
                                     }
                                 }
                                 
